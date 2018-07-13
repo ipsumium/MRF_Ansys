@@ -1,0 +1,415 @@
+/Clear
+/PREP7
+!ET,1,45
+ET,1,185
+ET,2,TARGE170
+ET,3,CONTA174 
+MP,EX,1,210000		! Material Properties, Young's Modulus, Material 1, 70000 MPa
+MP,PRXY,1,0.3		!Poisson
+MP,MU,1,0.3			!MIU
+K,1,0,0,0
+pi=3.14159
+
+!Forta
+Q=50000
+
+TYPE,1
+
+!Dimensiuni stalp
+st_inaltime=1000
+st_bf=300
+st_tf=20 
+st_hw=300 !inaltime inima
+st_tw=10
+
+element=10 !Marime ELEMENT
+
+!Dimensiuni grinda
+gr_lungime=1000
+cota_inf=300
+gr_bf=200
+gr_tf=20 
+gr_hw=300 !inaltime inima
+gr_tw=10
+
+!dimensiuni flansa
+f_h=500
+f_w=300
+f_t=20
+
+!dimensiuni buloane
+r_bulon = 8
+r_gaura = 9
+r_piulita = 15
+grosime_piulita = 10
+d_inima=40					!distanta fata de inima
+z1= cota_inf-40
+z2= cota_inf + 80
+z3= cota_inf + 150
+z4= cota_inf + 200
+z5= cota_inf + 250
+
+!Creare talpi stalp
+
+K,2,0,st_bf/2,0
+K,3,-st_tf,st_bf/2,0
+K,4,-st_tf,-st_bf/2,0
+K,5,0,-st_bf/2,0
+
+K,6,0,st_bf/2,st_inaltime
+K,7,-st_tf,st_bf/2,st_inaltime
+K,8,-st_tf,-st_bf/2,st_inaltime
+K,9,0,-st_bf/2,st_inaltime
+
+V,2,3,4,5,6,7,8,9
+
+K,10,-st_hw-st_tf,st_bf/2,0
+K,11,-st_hw-st_tf-st_tf,st_bf/2,0
+K,12,-st_hw-st_tf-st_tf,-st_bf/2,0
+K,13,-st_hw-st_tf,-st_bf/2,0
+
+K,14,-st_hw-st_tf,st_bf/2,st_inaltime
+K,15,-st_hw-st_tf-st_tf,st_bf/2,st_inaltime
+K,16,-st_hw-st_tf-st_tf,-st_bf/2,st_inaltime
+K,17,-st_hw-st_tf,-st_bf/2,st_inaltime
+
+V,10,11,12,13,14,15,16,17
+
+!Creare inima stalp
+
+K,18,-st_tf,st_tw/2,0
+K,19,-st_hw-st_tf,st_tw/2,0
+K,20,-st_hw-st_tf,-st_tw/2,0
+K,21,-st_tf,-st_tw/2,0
+
+K,22,-st_tf,st_tw/2,st_inaltime
+K,23,-st_hw-st_tf,st_tw/2,st_inaltime
+K,24,-st_hw-st_tf,-st_tw/2,st_inaltime
+K,25,-st_tf,-st_tw/2,st_inaltime
+
+V,18,19,20,21,22,23,24,25
+
+
+
+!talpi grinda
+K,26,f_t,-gr_bf/2,cota_inf
+K,27,f_t,gr_bf/2,cota_inf
+K,28,f_t,gr_bf/2,cota_inf+gr_tf
+K,29,f_t,-gr_bf/2,cota_inf+gr_tf
+
+K,30,f_t+gr_lungime,-gr_bf/2,cota_inf
+K,31,f_t+gr_lungime,gr_bf/2,cota_inf
+K,32,f_t+gr_lungime,gr_bf/2,cota_inf+gr_tf
+K,33,f_t+gr_lungime,-gr_bf/2,cota_inf+gr_tf
+
+V,26,27,28,29,30,31,32,33
+
+K,34,f_t,-gr_bf/2,cota_inf+gr_tf+gr_hw
+K,35,f_t,gr_bf/2,cota_inf+gr_tf+gr_hw
+K,36,f_t,gr_bf/2,cota_inf+gr_tf+gr_tf+gr_hw
+K,37,f_t,-gr_bf/2,cota_inf+gr_tf+gr_tf+gr_hw
+
+K,38,f_t+gr_lungime,-gr_bf/2,cota_inf+gr_tf+gr_hw
+K,39,f_t+gr_lungime,gr_bf/2,cota_inf+gr_tf+gr_hw
+K,40,f_t+gr_lungime,gr_bf/2,cota_inf+gr_tf+gr_tf+gr_hw
+K,41,f_t+gr_lungime,-gr_bf/2,cota_inf+gr_tf+gr_tf+gr_hw
+
+V,34,35,36,37,38,39,40,41
+
+!inima grinda
+
+K,42, f_t , -gr_tw/2, cota_inf+gr_tf
+K,43, f_t , gr_tw/2, cota_inf+gr_tf
+K,44, f_t , gr_tw/2, cota_inf+gr_tf + gr_hw
+K,45, f_t , -gr_tw/2, cota_inf+gr_tf + gr_hw
+
+K,46, f_t+gr_lungime , -gr_tw/2, cota_inf+gr_tf
+K,47, f_t+gr_lungime , gr_tw/2, cota_inf+gr_tf
+K,48, f_t+gr_lungime , gr_tw/2, cota_inf+gr_tf + gr_hw
+K,49, f_t+gr_lungime , -gr_tw/2, cota_inf+gr_tf + gr_hw
+
+V,42,43,44,45,46,47,48,49
+
+!flansa
+
+K,50, 0 , -f_w/2 , cota_inf + gr_tf + gr_hw/2 - f_h/2
+K,51, 0 , f_w/2 , cota_inf + gr_tf + gr_hw/2 - f_h/2
+K,52, 0 , f_w/2 , cota_inf + gr_tf + gr_hw/2 + f_h/2
+K,53, 0 , -f_w/2 , cota_inf + gr_tf + gr_hw/2 + f_h/2
+
+K,54, f_t , -f_w/2 , cota_inf + gr_tf + gr_hw/2 - f_h/2
+K,55, f_t , f_w/2 , cota_inf + gr_tf + gr_hw/2 - f_h/2
+K,56, f_t , f_w/2 , cota_inf + gr_tf + gr_hw/2 + f_h/2
+K,57, f_t , -f_w/2 , cota_inf + gr_tf + gr_hw/2 + f_h/2
+
+V,50,51,52,53,54,55,56,57
+
+! buloane
+WPLANE, ,0,0,0,0,0,1,0,1,0
+
+!GAURI
+
+CYL4, z1 , d_inima, r_gaura, , , , st_tf + f_t
+CYL4, z1 , -d_inima, r_gaura, , , , st_tf + f_t
+
+CYL4, z2 , d_inima, r_gaura, , , , st_tf + f_t
+CYL4, z2 , -d_inima, r_gaura, , , , st_tf + f_t
+
+CYL4, z3 , d_inima, r_gaura, , , , st_tf + f_t
+CYL4, z3 , -d_inima, r_gaura, , , , st_tf + f_t
+
+CYL4, z4 , d_inima, r_gaura, , , , st_tf + f_t
+CYL4, z4 , -d_inima, r_gaura, , , , st_tf + f_t
+
+CYL4, z5 , d_inima, r_gaura, , , , st_tf + f_t
+CYL4, z5 , -d_inima, r_gaura, , , , st_tf + f_t
+
+VGEN, , 8,17 ,1,st_tf, , , , ,1	!muta cilindrul 
+
+VSBV, all, 8, , , DELETE	!creaza gaurile
+VSBV, all, 9, , , DELETE	!creaza gaurile
+VSBV, all, 10, , , DELETE	!creaza gaurile
+VSBV, all, 11, , , DELETE	!creaza gaurile
+VSBV, all, 12, , , DELETE	!creaza gaurile
+VSBV, all, 13, , , DELETE	!creaza gaurile
+VSBV, all, 14, , , DELETE	!creaza gaurile
+VSBV, all, 15, , , DELETE	!creaza gaurile
+VSBV, all, 16, , , DELETE	!creaza gaurile
+VSBV, all, 17, , , DELETE	!creaza gaurile
+
+!Creare bulon pozitia 1
+CYL4, z1 , d_inima, r_bulon, , , , st_tf + f_t
+VGEN, , 8, ,,st_tf, , , , ,1	!muta cilindrul 
+
+CYL4, z1 , d_inima, r_piulita, , , , grosime_piulita
+VGEN, , 9, ,,st_tf + grosime_piulita, , , , ,1	!muta cilindrul 
+
+CYL4, z1 , d_inima, r_piulita, , , , grosime_piulita
+VGEN, , 10, ,,-st_tf, , , , ,1	!muta cilindrul 
+
+VADD,8,9,10
+
+!Copiere buloane
+
+VGEN, 2, 11, , , 0, 0, z2-z1, 0, 0, 0
+VGEN, 2, 11, , , 0, 0, z3-z1, 0, 0, 0
+VGEN, 2, 11, , , 0, 0, z4-z1, 0, 0, 0
+VGEN, 2, 11, , , 0, 0, z5-z1, 0, 0, 0
+
+VGEN,2 , 8,12 ,1,,-2*d_inima , , , ,	!copiaza buloanele pe partea cealalta
+
+!Topire volume stalp , grinda
+VADD,1,2,3
+VADD,4,5,6,7
+
+!MESH
+
+!SMRTSIZE,4
+!VMESH,ALL
+
+ALLS
+ESIZE,element
+MSHAPE,1,3D 
+MSHKEY,0
+VSEL, U, , , 8, 17, 1, 
+VMESH,ALL
+
+ESIZE,element/4
+VSEL, S, , , 8, 17, 1, 
+VMESH,ALL
+
+WPCSYS,,
+
+NSEL,S,LOC,Z,st_inaltime
+NSEL,A,LOC,z,0
+D,ALL,ALL,0
+ALLS
+
+
+NSEL,S,LOC,Z,cota_inf+2*gr_tf+gr_hw
+NSEL,R,LOC,X, f_t+1 , f_t+gr_lungime
+
+*Get,NRNODURI,node,0,count !Get the number of nodes in the selected set
+F,ALL,FZ,-Q/NRNODURI
+
+ALLS
+NSEL,S,LOC,Z,cota_inf+2*gr_tf+gr_hw
+NSEL,R,LOC,X, f_t+1 , f_t+gr_lungime
+D,ALL,UY,0
+!D,ALL,UZ,0
+
+!STALP - BULOANE
+TYPE,2 !TARGET
+R,1, , ,
+REAL,1
+VSEL,S,,,18
+NSLV,S,1
+NSEL, R, LOC, Z, z1-r_piulita-5,z1+r_piulita+5
+NSEL, A, LOC, Z, z2-r_piulita-5,z2+r_piulita+5
+NSEL, A, LOC, Z, z3-r_piulita-5,z3+r_piulita+5
+NSEL, A, LOC, Z, z4-r_piulita-5,z4+r_piulita+5
+NSEL, A, LOC, Z, z5-r_piulita-5,z5+r_piulita+5
+NSEL, R, LOC, X, -st_tf
+NSEL, R, LOC, Y, d_inima-r_piulita-5,d_inima+r_piulita+5
+ESURF
+
+TYPE,3
+VSEL,S,,,8,17,1
+NSLV,S,1
+NSEL, R, LOC, Z, z1-r_piulita-5,z1+r_piulita+5
+NSEL, A, LOC, Z, z2-r_piulita-5,z2+r_piulita+5
+NSEL, A, LOC, Z, z3-r_piulita-5,z3+r_piulita+5
+NSEL, A, LOC, Z, z4-r_piulita-5,z4+r_piulita+5
+NSEL, A, LOC, Z, z5-r_piulita-5,z5+r_piulita+5
+NSEL, R, LOC, X, -st_tf
+NSEL, R, LOC, Y, d_inima-r_piulita-5,d_inima+r_piulita+5
+ESURF
+
+
+TYPE,2 !TARGET
+R,2, , ,
+REAL,2
+VSEL,S,,,18
+NSLV,S,1
+NSEL, R, LOC, Z, z1-r_piulita-5,z1+r_piulita+5
+NSEL, A, LOC, Z, z2-r_piulita-5,z2+r_piulita+5
+NSEL, A, LOC, Z, z3-r_piulita-5,z3+r_piulita+5
+NSEL, A, LOC, Z, z4-r_piulita-5,z4+r_piulita+5
+NSEL, A, LOC, Z, z5-r_piulita-5,z5+r_piulita+5
+NSEL, R, LOC, X, -st_tf
+NSEL, R, LOC, Y, -d_inima-r_piulita-5,-d_inima+r_piulita+5
+ESURF
+
+TYPE,3
+VSEL,S,,,8,17,1
+NSLV,S,1
+NSEL, R, LOC, Z, z1-r_piulita-5,z1+r_piulita+5
+NSEL, A, LOC, Z, z2-r_piulita-5,z2+r_piulita+5
+NSEL, A, LOC, Z, z3-r_piulita-5,z3+r_piulita+5
+NSEL, A, LOC, Z, z4-r_piulita-5,z4+r_piulita+5
+NSEL, A, LOC, Z, z5-r_piulita-5,z5+r_piulita+5
+NSEL, R, LOC, X, -st_tf
+NSEL, R, LOC, Y, -d_inima-r_piulita-5,-d_inima+r_piulita+5
+ESURF
+
+!Grinda - BULOANE
+TYPE,2 !TARGET
+R,3, , ,
+REAL,3
+VSEL,S,,,1
+NSLV,S,1
+NSEL, R, LOC, Z, z1-r_piulita-5,z1+r_piulita+5
+NSEL, A, LOC, Z, z2-r_piulita-5,z2+r_piulita+5
+NSEL, A, LOC, Z, z3-r_piulita-5,z3+r_piulita+5
+NSEL, A, LOC, Z, z4-r_piulita-5,z4+r_piulita+5
+NSEL, A, LOC, Z, z5-r_piulita-5,z5+r_piulita+5
+NSEL, R, LOC, X, f_t
+NSEL, R, LOC, Y, d_inima-r_piulita-5,d_inima+r_piulita+5
+ESURF
+
+TYPE,3
+VSEL,S,,,8,17,1
+NSLV,S,1
+NSEL, R, LOC, Z, z1-r_piulita-5,z1+r_piulita+5
+NSEL, A, LOC, Z, z2-r_piulita-5,z2+r_piulita+5
+NSEL, A, LOC, Z, z3-r_piulita-5,z3+r_piulita+5
+NSEL, A, LOC, Z, z4-r_piulita-5,z4+r_piulita+5
+NSEL, A, LOC, Z, z5-r_piulita-5,z5+r_piulita+5
+NSEL, R, LOC, X, f_t
+NSEL, R, LOC, Y, d_inima-r_piulita-5,d_inima+r_piulita+5
+ESURF
+
+TYPE,2 !TARGET
+R,4 , ,
+REAL,4
+VSEL,S,,,1
+NSLV,S,1
+NSEL, R, LOC, Z, z1-r_piulita-5,z1+r_piulita+5
+NSEL, A, LOC, Z, z2-r_piulita-5,z2+r_piulita+5
+NSEL, A, LOC, Z, z3-r_piulita-5,z3+r_piulita+5
+NSEL, A, LOC, Z, z4-r_piulita-5,z4+r_piulita+5
+NSEL, A, LOC, Z, z5-r_piulita-5,z5+r_piulita+5
+NSEL, R, LOC, X, f_t
+NSEL, R, LOC, Y, -d_inima-r_piulita-5,-d_inima+r_piulita+5
+ESURF
+
+TYPE,3
+VSEL,S,,,8,17,1
+NSLV,S,1
+NSEL, R, LOC, Z, z1-r_piulita-5,z1+r_piulita+5
+NSEL, A, LOC, Z, z2-r_piulita-5,z2+r_piulita+5
+NSEL, A, LOC, Z, z3-r_piulita-5,z3+r_piulita+5
+NSEL, A, LOC, Z, z4-r_piulita-5,z4+r_piulita+5
+NSEL, A, LOC, Z, z5-r_piulita-5,z5+r_piulita+5
+NSEL, R, LOC, X, f_t
+NSEL, R, LOC, Y, -d_inima-r_piulita-5,-d_inima+r_piulita+5
+ESURF
+
+!FLANSA STALP
+TYPE,2
+R,5, , ,
+REAL,5
+VSEL,S,,,18
+NSLV,S,1
+NSEL, R, LOC, X, 0
+NSEL, R, LOC, Z, cota_inf + gr_tf + gr_hw/2 - f_h/2-20, cota_inf + gr_tf + gr_hw/2 + f_h/2+20,1
+ESURF
+
+TYPE,3
+VSEL,S,,,1
+NSLV,S,1
+NSEL, R, LOC, X, 0
+NSEL, R, LOC, Z, cota_inf-20, cota_inf+gr_tf*2+gr_hw+20,1
+ESURF
+
+
+!Mijloc buloane
+TYPE,2
+R,6,,,
+REAL,6
+VSEL,S,,,18
+ASLV
+ASEL, R, LOC, X, -st_tf+1, -1, 1, 0
+ASEL, R, LOC, Y, -d_inima-r_bulon-5 , d_inima+r_bulon+5, 1, 0
+ASEL, R, LOC, Z, z1-5 , z5+5, 1, 0
+NSLA,,1
+ESURF
+
+TYPE,3
+VSEL,S,,,8,17,1
+ASLV
+NSLA,,1
+NSEL,R,LOC,X,-st_tf+1,f_t-1,1
+ESURF
+
+TYPE,2
+R,7,,,
+REAL,7
+VSEL,S,,,1
+ASLV
+ASEL, R, LOC, X, 1, f_t-1, 1, 0
+ASEL, R, LOC, Y, -d_inima-r_bulon-5 , d_inima+r_bulon+5, 1, 0
+ASEL, R, LOC, Z, z1-5 , z5+5, 1, 0
+NSLA,,1
+ESURF
+
+TYPE,3
+VSEL,S,,,8,17,1
+ASLV
+NSLA,,1
+NSEL,R,LOC,X,-st_tf+1,f_t-1,1
+ESURF
+
+CNCHECK,AUTO 
+ALLS
+
+/SOL
+ANTYPE,0
+NSUBST,10,15,5  
+OUTRES,ERASE
+OUTRES,ALL,1
+AUTOTS,1
+NEQIT,20
+TIME,1 
+NROP,UNSYM
+SOLVE
